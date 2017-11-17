@@ -194,10 +194,10 @@ public class TreeMap<K,V>
      *         and whose comparator is to be used to sort this map
      * @throws NullPointerException if the specified map is null
      */
-    public TreeMap(SortedMap<K, ? extends V> m) {
-        comparator = m.comparator();
+    public TreeMap(SortedMap<K, ? extends V> sortedMap) {
+        comparator = sortedMap.comparator();
         try {
-            buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
+            buildFromSorted(sortedMap.size(), sortedMap.entrySet().iterator(), null, null);
         } catch (java.io.IOException cannotHappen) {
         } catch (ClassNotFoundException cannotHappen) {
         }
@@ -2867,8 +2867,9 @@ public class TreeMap<K,V>
         }
 
         public ValueSpliterator<K,V> trySplit() {
-            if (est < 0)
+            if (est < 0) {
                 getEstimate(); // force initialization
+            }
             int d = side;
             TreeMap.Entry<K,V> e = current, f = fence,
                     s = ((e == null || e == f) ? null :      // empty
@@ -2939,8 +2940,9 @@ public class TreeMap<K,V>
         }
 
         public EntrySpliterator<K,V> trySplit() {
-            if (est < 0)
+            if (est < 0) {
                 getEstimate(); // force initialization
+	    }
             int d = side;
             TreeMap.Entry<K,V> e = current, f = fence,
                     s = ((e == null || e == f) ? null :      // empty
